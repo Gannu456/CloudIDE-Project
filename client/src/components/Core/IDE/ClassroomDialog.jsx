@@ -60,7 +60,7 @@ const ClassroomDialog = ({ roomId, onClose, onJoin }) => {
             disabled={!name.trim()}
             className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 flex items-center"
           >
-                <FaUserFriends className="mr-2" /> Join Classroom
+            <FaUserFriends className="mr-2" /> Join Classroom
           </button>
         </div>
       </div>

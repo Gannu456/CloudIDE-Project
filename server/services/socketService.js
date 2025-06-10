@@ -6,7 +6,6 @@ const { v4: uuidv4 } = require("uuid");
 
 const rooms = new Map(); // roomId -> { users: Map<socketId, userData>, initiator: socketId }
 
-
 const initializeSocket = (server) => {
   const io = new SocketServer(server, {
     cors: {
@@ -14,7 +13,7 @@ const initializeSocket = (server) => {
       methods: ["GET", "POST"],
       credentials: true,
     },
-  });           
+  });
 
   io.on("connection", (socket) => {
     console.log("New client connected:", socket.id);
@@ -28,49 +27,48 @@ const initializeSocket = (server) => {
     });
 
     // Update the create-room handler
-socket.on("create-room", (callback) => {
-    try {
-      let roomId;
-      let attempts = 0;
-  
-      do {
-        roomId = generateRoomCode();
-        attempts++;
-        if (attempts > 10) {
-          roomId = uuidv4();
-          break;
-        }
-      } while (rooms.has(roomId));
-  
-      rooms.set(roomId, {
-        users: new Map([
-          [
-            socket.id,
-            {
-              id: socket.id,
-              name: `User-${socket.id.slice(0, 4)}`,
-              video: true,
-              audio: true,
-              screen: false,
-            },
-          ],
-        ]),
-        initiator: socket.id,
-        createdAt: new Date(),
-      });
-  
-      console.log(`Room created: ${roomId}`);
-      callback({ roomId });
-      
-      // Immediately join the creator to the room
-      socket.join(roomId);
-      broadcastRoomState(roomId);
-      
-    } catch (error) {
-      console.error("Error creating room:", error);
-      callback({ error: "Failed to create room" });
-    }
-  });
+    socket.on("create-room", (callback) => {
+      try {
+        let roomId;
+        let attempts = 0;
+
+        do {
+          roomId = generateRoomCode();
+          attempts++;
+          if (attempts > 10) {
+            roomId = uuidv4();
+            break;
+          }
+        } while (rooms.has(roomId));
+
+        rooms.set(roomId, {
+          users: new Map([
+            [
+              socket.id,
+              {
+                id: socket.id,
+                name: `User-${socket.id.slice(0, 4)}`,
+                video: true,
+                audio: true,
+                screen: false,
+              },
+            ],
+          ]),
+          initiator: socket.id,
+          createdAt: new Date(),
+        });
+
+        console.log(`Room created: ${roomId}`);
+        callback({ roomId });
+
+        // Immediately join the creator to the room
+        socket.join(roomId);
+        broadcastRoomState(roomId);
+      } catch (error) {
+        console.error("Error creating room:", error);
+        callback({ error: "Failed to create room" });
+      }
+    });
 
     // Validate room exists
     socket.on("validate-room", (roomId, callback) => {

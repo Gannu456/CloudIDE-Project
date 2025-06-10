@@ -361,16 +361,7 @@ const Dashboard = () => {
                   </span>
                 </button>
               ))}
-              {/* <div className="dashboard-actions">
-                <button
-                  onClick={handleJoinClassroom}
-                  className="btn btn-primary join-classroom-btn"
-                >
-                  <FaChalkboardTeacher className="mr-2" />
-                  Join Classroom
-                </button>
-              </div> */}
-
+              
               {/* Classroom Join Dialog */}
               {showClassroomDialog && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

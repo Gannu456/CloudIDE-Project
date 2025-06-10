@@ -4,64 +4,12 @@ import { toast } from "react-hot-toast";
 
 const YouTubeStreamDialog = ({
   isOpen,
-//   onStreaming,
-//   socketRef,
   streamKey,
   onStreamKeyChange,
   onStartStreaming,
   onClose,
 }) => {
   if (!isOpen) return null;
-
-//   const [streamKey, setStreamKey] = useState("");
-//   const mediaRecorderRef = useRef(null);
-//   const localStreamRef = useRef(null);
-
-//   const startStreaming = useCallback(async () => {
-//     if (!socketRef.current) {
-//       toast.error("Socket not connected. Try again.");
-//       return;
-//     }
-//     try {
-//       onClose(false);
-//       toast.loading("Starting stream...");
-//       const stream = await navigator.mediaDevices.getUserMedia({
-//         video: { width: 1280, height: 720, frameRate: 30 },
-//         audio: true,
-//       });
-//       localStreamRef.current = stream;
-//       const recorder = new MediaRecorder(stream, {
-//         mimeType: "video/webm;codecs=vp9,opus",
-//         videoBitsPerSecond: 2500000,
-//       });
-//       recorder.ondataavailable = async (event) => {
-//         if (event.data.size > 0 && socketRef.current?.connected) {
-//           const buffer = await event.data.arrayBuffer();
-//           socketRef.current.emit("stream-data", buffer);
-//         }
-//       };
-//       recorder.start(1000);
-//       mediaRecorderRef.current = recorder;
-//       socketRef.current.emit("start-stream", streamKey);
-//       onStreaming(true);
-//       toast.success("Live stream started!");
-//     } catch (error) {
-//       toast.error(`Failed to start stream: ${error.message}`);
-//       stopStreaming();
-//     }
-//   }, [streamKey]);
-
-//   const stopStreaming = useCallback(() => {
-//     if (mediaRecorderRef.current?.state !== "inactive") {
-//       mediaRecorderRef.current?.stop();
-//     }
-//     localStreamRef.current?.getTracks().forEach((track) => track.stop());
-//     socketRef.current?.emit("stop-stream");
-//     mediaRecorderRef.current = null;
-//     localStreamRef.current = null;
-//     onStreaming(false);
-//     toast("Live stream stopped");
-//   }, []);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
@@ -134,63 +82,3 @@ const YouTubeStreamDialog = ({
 };
 
 export default YouTubeStreamDialog;
-
-
-
-
-
-
-// import { FiVideo } from "react-icons/fi";
-
-// const YouTubeStreamDialog = ({ 
-//   isOpen, 
-//   streamKey, 
-//   onStreamKeyChange, 
-//   onStartStreaming, 
-//   onClose 
-// }) => {
-//   if (!isOpen) return null;
-
-//   return (
-//     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-//       <div className="bg-white p-6 rounded-lg max-w-md w-full shadow-xl border border-gray-200">
-//         <h3 className="text-lg font-medium mb-4 text-gray-800">
-//           Start YouTube Live Stream
-//         </h3>
-//         <div className="mb-4">
-//           <label className="block text-sm font-medium text-gray-700 mb-1">
-//             YouTube Stream Key
-//           </label>
-//           <input
-//             type="password"
-//             value={streamKey}
-//             onChange={(e) => onStreamKeyChange(e.target.value)}
-//             placeholder="Enter your YouTube stream key"
-//             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-//           />
-//           <p className="mt-1 text-xs text-gray-500">
-//             Get this from YouTube Studio &gt; Go Live
-//           </p>
-//         </div>
-//         <div className="flex justify-end space-x-3">
-//           <button
-//             onClick={onClose}
-//             className="px-4 py-2 rounded border border-gray-300 text-gray-700 hover:bg-gray-50"
-//           >
-//             Cancel
-//           </button>
-//           <button
-//             onClick={onStartStreaming}
-//             className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500"
-//             disabled={!streamKey}
-//           >
-//             <FiVideo className="inline mr-2" />
-//             Start Streaming
-//           </button>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default YouTubeStreamDialog;
